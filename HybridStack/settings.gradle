@@ -1,0 +1,10 @@
+rootProject.name='HybridStack'
+include ':app'
+setBinding(new Binding([gradle: this]))
+evaluate(new File(
+  settingsDir,
+  '../flutter_module_hs/.android/include_flutter.groovy'
+))
+
+include ':flutter_module_hs'
+project(':flutter_module_hs').projectDir = new File('../flutter_module_hs')
