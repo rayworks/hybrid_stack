@@ -1,10 +1,40 @@
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+        localProperties.load(reader)
+    }
+}
+
+def flutterRoot = localProperties.getProperty('flutter.sdk')
+if (flutterRoot == null) {
+    throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
+} else {
+    println(flutterRoot)
+}
+def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
+if (flutterVersionCode == null) {
+    flutterVersionCode = '1'
+}
+
+def flutterVersionName = localProperties.getProperty('flutter.versionName')
+if (flutterVersionName == null) {
+    flutterVersionName = '1.0'
+}
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
+
+    lintOptions {
+        disable 'InvalidPackage'
+    }
 
     defaultConfig {
         applicationId "com.rayworks.hybridstack"
@@ -35,6 +65,13 @@ android {
         jvmTarget = "1.8"
     }
 
+    ndkVersion "21.1.6352462"
+
+}
+
+// flutter.gradle : Must provide Flutter source directory
+flutter {
+    source '../../flutter_module_hs'
 }
 
 dependencies {
@@ -44,10 +81,10 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.2.0'
     implementation 'com.google.android.material:material:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-//    implementation 'androidx.navigation:navigation-fragment-ktx:2.2.1'
-//    implementation 'androidx.navigation:navigation-ui-ktx:2.2.1'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    implementation project(path: ':flutter')
+    implementation project(':flutter')
+
+    implementation project(':flutter_boost')
 }

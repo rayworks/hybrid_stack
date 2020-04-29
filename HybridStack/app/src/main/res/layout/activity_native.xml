@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".NativeActivity">
+
+    <Button
+        android:layout_centerInParent="true"
+        android:text="Native page"
+        android:id="@+id/btn_native"
+        android:onClick="onGoToNative"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:layout_centerHorizontal="true"
+        android:layout_margin="16dp"
+        android:layout_above="@id/btn_native"
+        android:text="Native page layout :"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:layout_margin="16dp"
+        android:onClick="onGoToFlutter"
+        android:text="Flutter page"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/btn_native"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</RelativeLayout>

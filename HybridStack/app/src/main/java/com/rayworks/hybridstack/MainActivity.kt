@@ -5,10 +5,9 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.content_main.*
-import kotlin.random.Random
-import kotlin.random.Random.Default.nextInt
+import kotlinx.android.synthetic.main.activity_main.fab
+import kotlinx.android.synthetic.main.activity_main.toolbar
+import kotlinx.android.synthetic.main.content_main.nav_text
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,7 +20,10 @@ class MainActivity : AppCompatActivity() {
             Snackbar.make(view, "Show you around ?", Snackbar.LENGTH_LONG)
                 .setAction("Yes") {
                     val ctx = this@MainActivity
-                    val app = application as App
+                    val map = mutableMapOf<String, String>()
+
+                    PageRouter.openPageByUrl(this, PageRouter.FLUTTER_PAGE_URL, map)
+                    /*val app = application as App
                     app.droidPlugin.normalMethodHandler.invokeMethod(
                         "gotoRoute", nextInt(1000) % 2,
                         callback = {}
@@ -29,9 +31,9 @@ class MainActivity : AppCompatActivity() {
                     val intent = MyFlutterActivity.EngineIntentBuilder(
                         MyFlutterActivity::class.java,
                         "flutter_engine_id"
-                    ).build(ctx)
+                    ).build(ctx)*/
 
-                    startActivity(intent)
+                    //startActivity(intent)
                     overridePendingTransition(0, 0)
                 }.show()
         }
