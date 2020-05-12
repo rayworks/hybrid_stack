@@ -37,14 +37,14 @@
             android:hardwareAccelerated="true"
             android:theme="@style/Theme.AppCompat"
             android:windowSoftInputMode="adjustResize">
-            <!--<meta-data
+            <meta-data
                 android:name="io.flutter.embedding.android.SplashScreenDrawable"
-                android:resource="@mipmap/ic_launcher_round" />-->
+                android:resource="@mipmap/ic_launcher_round" />
         </activity>
 
         <meta-data
             android:name="flutterEmbedding"
-            android:value="2"></meta-data>
+            android:value="2" />
     </application>
 
 </manifest>

@@ -28,6 +28,7 @@ class NormalMethodHandler : MethodChannel.MethodCallHandler {
     }
 
     fun invokeMethod(method: String, arguments: Any, callback: (result: MethodChannelResult) -> Unit) {
+        println(">>> send n2f : cmd - $method")
         methodChannel?.invokeMethod(method, arguments, object : MethodChannel.Result{
             override fun notImplemented() {
                 Log.d("NormalMethodHandler", "notImplemented")
@@ -47,6 +48,7 @@ class NormalMethodHandler : MethodChannel.MethodCallHandler {
     }
 
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
+        println(">>> recv f2n : cmd - ${call.method}")
         when (call.method) {
             "jump" -> {
                 val intent = Intent(appCtx, MainActivity::class.java)

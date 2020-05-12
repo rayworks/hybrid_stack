@@ -18,13 +18,15 @@ class DemoText extends StatelessWidget {
         child: Center(
           child: RaisedButton(
             onPressed: () {
-              //methodChannel.invokeMethod("jump")
-              FlutterBoost.singleton
+              print("f2n : cmd - " + "jump");
+              methodChannel.invokeMethod("jump");
+
+              /*FlutterBoost.singleton
                   .open('native')
                   .then((Map<dynamic, dynamic> value) {
                 print(
                     'call me when page is finished. did recieve native route result $value');
-              });
+              });*/
             },
             child: Text(
               "Test widget in flutter page",
@@ -55,7 +57,7 @@ class AppState extends State<MyApp> {
   AppState(int type);
 
   Future<dynamic> _handleMethodCall(MethodCall call) async {
-    print("globbal_method_channel received ${call.method} ${call.arguments}");
+    print("global_method_channel received ${call.method} ${call.arguments}");
     switch (call.method) {
       case "gotoRoute":
         //_initialize(call.arguments);
@@ -68,27 +70,34 @@ class AppState extends State<MyApp> {
 
   @override
   void initState() {
+    // NB: methodChannel should still work for non-page navigation logic
+//    methodChannel.setMethodCallHandler(_handleMethodCall);
+
+    // Due to the change on 'flutter activity', it seems we have to use the
+    // boost's registered handler to manage the route navigation.
     FlutterBoost.singleton.registerPageBuilders({
       'init': (pageName, params, _) => MyHomePage(),
       'gotoRoute': (pageName, params, _) => MyHomePage(),
       'gotoDemo': (pageName, params, _) => DemoText(),
-
-      ///可以在native层通过 getContainerParams 来传递参数
       'flutterPage': (String pageName, Map<dynamic, dynamic> params, String _) {
         print('flutterPage params:$params');
 
-        var index = Random().nextInt(2);
-        //var names = ['gotoRoute', 'gotoDemo']
+        var index;
+        if (params.containsKey("gotoRoute")) {
+          index = int.parse(params["gotoRoute"]);
+          print(">>> widget index from param : $index");
+        } else {
+          index = Random().nextInt(2);
+          print(">>> widget index from Random : $index");
+        }
+
         return index == 0
             ? MyHomePage(
                 title: "Flutter Demo title",
               )
             : DemoText();
-        /*FlutterRouteWidget(params: params)*/
-        ;
       },
     });
-//    methodChannel.setMethodCallHandler(_handleMethodCall);
     super.initState();
   }
 
@@ -162,11 +171,13 @@ class _MyHomePageState extends State<MyHomePage> {
       _counter++;
     });
 
-    // methodChannel.invokeMethod("jump");
-    FlutterBoost.singleton.open('native').then((Map<dynamic, dynamic> value) {
+    print("f2n : cmd - " + "jump");
+    methodChannel.invokeMethod("jump");
+
+    /*FlutterBoost.singleton.open('native').then((Map<dynamic, dynamic> value) {
       print(
           'call me when page is finished. did recieve native route result $value');
-    });
+    });*/
   }
 
   @override

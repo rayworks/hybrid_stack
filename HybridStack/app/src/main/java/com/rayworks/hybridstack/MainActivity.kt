@@ -5,9 +5,11 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
+import com.idlefish.flutterboost.containers.BoostFlutterActivity
 import kotlinx.android.synthetic.main.activity_main.fab
 import kotlinx.android.synthetic.main.activity_main.toolbar
 import kotlinx.android.synthetic.main.content_main.nav_text
+import kotlin.random.Random.Default.nextInt
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,6 +23,7 @@ class MainActivity : AppCompatActivity() {
                 .setAction("Yes") {
                     val ctx = this@MainActivity
                     val map = mutableMapOf<String, String>()
+                    map["gotoRoute"] = (nextInt(1000) % 2).toString();
 
                     PageRouter.openPageByUrl(this, PageRouter.FLUTTER_PAGE_URL, map)
                     /*val app = application as App
