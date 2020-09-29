@@ -24,7 +24,7 @@ object PageRouter {
     fun openPageByUrl(
         context: Context,
         url: String,
-        params: Map<*, *>?,
+        params: Map<String, Any>?,
         requestCode: Int = 0
     ): Boolean {
         val path = url.split("\\?").toTypedArray()[0]
